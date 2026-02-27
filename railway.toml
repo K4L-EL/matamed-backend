@@ -2,8 +2,12 @@
 builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
+[build.args]
+CACHE_BUST = "$RAILWAY_GIT_COMMIT_SHA"
+
 [deploy]
+startCommand = "dotnet Nex.Api.dll"
 healthcheckPath = "/health"
-healthcheckTimeout = 30
+healthcheckTimeout = 100
 restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 3
+restartPolicyMaxRetries = 10
