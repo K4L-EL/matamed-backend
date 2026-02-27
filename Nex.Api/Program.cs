@@ -19,6 +19,16 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (!string.IsNullOrEmpty(connectionString))
+{
+    Console.WriteLine("PostgreSQL connection configured.");
+}
+else
+{
+    Console.WriteLine("No database connection string found — running with in-memory stub data.");
+}
+
 builder.Services.AddSingleton<IDashboardService, StubDashboardService>();
 builder.Services.AddSingleton<IInfectionService, StubInfectionService>();
 builder.Services.AddSingleton<IPatientService, StubPatientService>();
