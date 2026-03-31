@@ -40,6 +40,7 @@ builder.Services.AddSingleton<IResistanceService, StubResistanceService>();
 builder.Services.AddSingleton<ITransmissionService, StubTransmissionService>();
 builder.Services.AddSingleton<IDeviceService, StubDeviceService>();
 builder.Services.AddSingleton<IPipelineService, StubPipelineService>();
+builder.Services.AddSingleton<IAiChatService, AiChatService>();
 
 builder.Services.AddHealthChecks();
 
