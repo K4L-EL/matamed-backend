@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nex.Api.Models;
 using Nex.Api.Services;
@@ -5,6 +6,7 @@ using Nex.Api.Services;
 namespace Nex.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class AlertsController(IAlertService alertService) : ControllerBase
 {

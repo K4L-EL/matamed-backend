@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nex.Api.Services;
 
 namespace Nex.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class TransmissionController(ITransmissionService transmissionService) : ControllerBase
 {
