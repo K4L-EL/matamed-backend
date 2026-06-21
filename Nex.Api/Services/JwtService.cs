@@ -20,7 +20,7 @@ public class JwtService : IJwtService
     {
         _key = configuration["Jwt:Key"]
             ?? Environment.GetEnvironmentVariable("JWT_KEY")
-            ?? "dev-only-change-me-to-a-strong-secret-at-least-32-chars-long";
+            ?? throw new InvalidOperationException("JWT signing key not configured. Set Jwt:Key or env JWT_KEY.");
         _issuer = configuration["Jwt:Issuer"] ?? "metamed";
         _audience = configuration["Jwt:Audience"] ?? "metamed-client";
     }

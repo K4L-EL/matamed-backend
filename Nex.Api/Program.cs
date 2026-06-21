@@ -40,7 +40,14 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        policy.SetIsOriginAllowed(origin =>
+            {
+                if (string.IsNullOrEmpty(origin)) return false;
+                if (origin.StartsWith("http://localhost:")) return true;
+                return origin is "https://metamed.aymane.co.uk" or "https://app.metamed.aymane.co.uk";
+            })
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
@@ -67,7 +74,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 // JWT
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? Environment.GetEnvironmentVariable("JWT_KEY")
-    ?? "dev-only-change-me-to-a-strong-secret-at-least-32-chars-long";
+    ?? throw new InvalidOperationException("JWT signing key not configured. Set Jwt:Key or env JWT_KEY.");
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "metamed";
 var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "metamed-client";
 
